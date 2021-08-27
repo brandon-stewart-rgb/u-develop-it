@@ -65,7 +65,7 @@ app.get('/api/candidates/:id', (req,res)=>{
 
 
 // delete a candidate
-app.get('/api/candidate/:id', (req, res)=>{
+app.delete('/api/candidate/:id', (req, res)=>{
     const sql = 'DELETE FROM candidates WHERE id = ?';
     const params = [req.params.id];
 
@@ -119,7 +119,7 @@ app.put('/api/candidate/:id', (req, res)=>{
     res.status(400).json({ error: errors });
     return;
     }
-
+    
     const sql = `UPDATE candidates SET party_id = ?
                 WHERE id = ?`;
     const params = [req.body.party_id, req.params.id];
