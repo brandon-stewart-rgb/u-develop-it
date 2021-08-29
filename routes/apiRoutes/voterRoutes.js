@@ -13,7 +13,7 @@ router.get('/voters', (req, res)=>{
         }
         res.json({
             message: 'success',
-            data: rows,
+            data: rows
         });
     });
 });
@@ -35,7 +35,7 @@ router.get('/voter/:id', (req, res)=>{
     });
 });
 
-router.post('/voter/:id',  ({ body }, res)=>{
+router.post('/voter/:id',  ({ body }, res)=>{cd
     //data validation
     const errors = inputCheck(body, 'first_name', 'last_name', 'email');
     if (errors) {
