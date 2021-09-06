@@ -1,27 +1,17 @@
 const express = require('express');
-const db = require('./db/connection');
-const apiRoutes = require('./routes/apiRoutes');
+const routes = require('./routes');
+const sequelize = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
 const app = express();
+const PORT = process.env.PORT || 3002;
 
-// express middleware
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// use apiRoutes
-app.use('/api', apiRoutes);
+// turn on routes
+app.use(routes);
 
-// default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
-
-// start server after DB connection
-db.connect(err => {
-  if (err) throw err;
-  console.log('The database is now connected');
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+// turn on connection to db and server
+sequelize.sync({ force: true }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });
